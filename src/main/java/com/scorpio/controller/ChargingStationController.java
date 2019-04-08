@@ -38,8 +38,8 @@ public class ChargingStationController {
 	@ResponseBody
 	public ChargingStation retrieveStation(@PathVariable long chargingStnID) {
 		Optional<ChargingStation> ChargingStation = chargingStationRepository.findById(chargingStnID);
-		return ChargingStation.get() 
-				.orElseThrow(() -> new EmployeeNotFoundException(chargingStnID));
+		return ChargingStation.get();
+			
 	}
 
 	@GetMapping(path = "/getAllChargingStn")
