@@ -19,7 +19,10 @@ import org.springframework.context.annotation.Configuration;
 import com.scorpio.entity.ChargingStation;
 import com.scorpio.service.ChargingStnService;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @SpringBootApplication
+@EnableSwagger2
 @Configuration
 @ComponentScan(basePackages = { "com.scorpio" })
 @EnableAutoConfiguration

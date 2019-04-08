@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice  
 public class StationExceptionHandler {
 	  @ExceptionHandler(StationNotFoundException.class)
-	    public ResponseEntity<StationErrorResponseEnt> handleStnNotFoundException(Exception ex) {
+	    public ResponseEntity<StationErrorResponseEnt> handleStnNotFoundException(Exception ex)  {
 		  StationErrorResponseEnt errorResponse = new StationErrorResponseEnt();
 	        errorResponse.setErrorCode(HttpStatus.PRECONDITION_FAILED.value());
 	        errorResponse.setErrorMessage(ex.getMessage());
-	        return new ResponseEntity<StationErrorResponseEnt>(errorResponse, HttpStatus.OK);
+	        return new ResponseEntity<StationErrorResponseEnt>(errorResponse, HttpStatus.NOT_FOUND);
 	    }
 	  
 	  @ExceptionHandler(StationAlreadyExistsException.class)

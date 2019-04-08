@@ -5,20 +5,20 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.handler.StationAlreadyExistsException;
+import com.handler.StationNotFoundException;
 import com.scorpio.entity.ChargingStation;
 import com.scorpio.repository.ChargingStationRepository;
 
@@ -28,10 +28,6 @@ public class ChargingStationController {
 	@Autowired
 	ChargingStationRepository chargingStationRepository;
 
-	@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Station Not Found")
-	public class StationNotFoundException extends Exception {
-		private static final long serialVersionUID = 1L;
-	}
 	
 	@PostMapping("/addStn")
 	public ResponseEntity<Object> createStn(@RequestBody ChargingStation Chargingstn)
@@ -39,25 +35,18 @@ public class ChargingStationController {
 		ChargingStation savedStn = chargingStationRepository.save(Chargingstn);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("")
-				.buildAndExpand(savedStn.getChargingStnID()).toUri();
-		try {
+			.buildAndExpand(savedStn.getChargingStnID()).toUri();
 			return ResponseEntity.created(location).build();
-		} catch (Exception e) {
-			throw new StationAlreadyExistsException();
-		}
 	}
 
 	@GetMapping("/getChargingStnByID/{chargingStnID}")
 	@ResponseBody
 	public ChargingStation retrieveStation(@PathVariable long chargingStnID) throws StationNotFoundException {
 		Optional<ChargingStation> ChargingStation = chargingStationRepository.findById(chargingStnID);
-		
-		if (ChargingStation == null) throw new StationNotFoundException();
-		
+		if (!ChargingStation.isPresent())
+			throw new StationNotFoundException();
 		return ChargingStation.get();
-		
-		
-			
+
 	}
 
 	@GetMapping(path = "/getAllChargingStn")
@@ -67,4 +56,25 @@ public class ChargingStationController {
 		List<ChargingStation> stationList = (List<ChargingStation>) chargingStationRepository.findAll();
 		return stationList;
 	}
+	
+	@DeleteMapping("/getChargingStnByID/{chargingStnID}")
+	public void deleteStudent(@PathVariable long chargingStnID) {
+		chargingStationRepository.deleteById(chargingStnID);
+	}
+	
+	@PutMapping("/getChargingStnByID/{chargingStnID}")
+	public ResponseEntity<Object> updateStudent(@RequestBody ChargingStation Chargingstn, @PathVariable long chargingStnID) {
+
+		Optional<ChargingStation> cs = chargingStationRepository.findById(chargingStnID);
+
+		if (!cs.isPresent())
+			return ResponseEntity.notFound().build();
+
+		Chargingstn.setChargingStnID(chargingStnID);
+		
+		chargingStationRepository.save(Chargingstn);
+
+		return ResponseEntity.noContent().build();
+	}
+
 }
