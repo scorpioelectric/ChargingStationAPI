@@ -10,5 +10,8 @@ import com.scorpio.entity.ChargingStation;
 @Repository
 public interface ChargingStationRepository extends CrudRepository<ChargingStation, Long> {
 	
-	 public ArrayList<ChargingStation> save(ArrayList<ChargingStation> items) ;
+
+	 public ArrayList<ChargingStation> save(ArrayList<ChargingStation> items);
+	 
+	 
 }
