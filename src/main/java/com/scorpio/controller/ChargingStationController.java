@@ -41,13 +41,24 @@ public class ChargingStationController {
 
 	@GetMapping("/getChargingStnByID/{chargingStnID}")
 	@ResponseBody
-	public ChargingStation retrieveStation(@PathVariable long chargingStnID) throws StationNotFoundException {
+	public ChargingStation retrieveStationByID(@PathVariable long chargingStnID) throws StationNotFoundException {
 		Optional<ChargingStation> ChargingStation = chargingStationRepository.findById(chargingStnID);
 		if (!ChargingStation.isPresent())
 			throw new StationNotFoundException();
 		return ChargingStation.get();
 
 	}
+	
+	@GetMapping("/getChargingStnByLocation/{AddressLine1}")
+	@ResponseBody
+	public ChargingStation retrieveStationByLocation(@PathVariable String AddressLine1) throws StationNotFoundException {
+		Optional<ChargingStation> ChargingStation = chargingStationRepository.retrieveStationByLocation(AddressLine1);
+		if (!ChargingStation.isPresent())
+			throw new StationNotFoundException();
+		return ChargingStation.get();
+
+	}
+
 
 	@GetMapping(path = "/getAllChargingStn")
 	@ResponseBody
@@ -58,12 +69,12 @@ public class ChargingStationController {
 	}
 	
 	@DeleteMapping("/getChargingStnByID/{chargingStnID}")
-	public void deleteStudent(@PathVariable long chargingStnID) {
+	public void deleteStation(@PathVariable long chargingStnID) {
 		chargingStationRepository.deleteById(chargingStnID);
 	}
 	
 	@PutMapping("/getChargingStnByID/{chargingStnID}")
-	public ResponseEntity<Object> updateStudent(@RequestBody ChargingStation Chargingstn, @PathVariable long chargingStnID) {
+	public ResponseEntity<Object> updateStation(@RequestBody ChargingStation Chargingstn, @PathVariable long chargingStnID) {
 
 		Optional<ChargingStation> cs = chargingStationRepository.findById(chargingStnID);
 
