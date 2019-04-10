@@ -29,8 +29,8 @@ public class SwaggerConfig{
 // Describe your apis
 private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
-    .title("Charging Station REST API")
-    .description("This page lists the RESTful API available for the charging station.")
+    .title("REST API")
+    .description("This page lists the RESTful API available for the charging station and user accounts.")
     .version("1.0-SNAPSHOT")
     .build();
 }

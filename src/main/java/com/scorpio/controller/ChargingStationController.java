@@ -28,7 +28,7 @@ public class ChargingStationController {
 	@Autowired
 	ChargingStationRepository chargingStationRepository;
 
-	
+	@ResponseBody
 	@PostMapping("/addStn")
 	public ResponseEntity<Object> createStn(@RequestBody ChargingStation Chargingstn)
 			throws StationAlreadyExistsException {

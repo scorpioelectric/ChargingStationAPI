@@ -1,73 +1,47 @@
 package com.scorpio.controller;
 
+import java.net.URI;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.scorpio.entity.UserAccount;
 import com.scorpio.repository.UserAccountRepository;
 
 @Controller
-@RequestMapping(path = "/userspersist")
+@RequestMapping(path = "/api")
 public class UserController {
 	@Autowired
 	UserAccountRepository userAccountRepository;
 
-	@RequestMapping(path = "/add")
 	@ResponseBody
-	public String addUser(@RequestParam String name, @RequestParam String password, @RequestParam String email) {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		
-		UserAccount userAccount = new UserAccount();
-		userAccount.setName(name);
-		userAccount.setPassword(password);
-		userAccount.setEmail(email);
-		userAccount.setCreatedAt(timestamp);
-		userAccount.setUpdatedAt(timestamp);
-		
-		
-		userAccountRepository.save(userAccount);
-
-		String ret = "User account has been added, name = " + name + ", password = " + password + ", email = " + email;
-
-		return ret;
-
+	@PostMapping("/addUser")
+	public ResponseEntity<Object> createStn(@RequestBody UserAccount userAcc) {
+		UserAccount savedAcc = userAccountRepository.save(userAcc);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("")
+			.buildAndExpand(savedAcc.getId()).toUri();
+			return ResponseEntity.created(location).build();
 	}
-
-	@GetMapping(path = "/findAll")
+	
+	@GetMapping("/getUserByID/{id}")
 	@ResponseBody
-	public String findAllUser() {
+	public UserAccount retrieveUserByID(@PathVariable long id) {
+		Optional<UserAccount> UserAccount = userAccountRepository.findById(id);
 
-		StringBuffer retBuf = new StringBuffer();
+		return UserAccount.get();
 
-		List<UserAccount> userAccountList = (List<UserAccount>) userAccountRepository.findAll();
-
-		if (userAccountList != null) {
-			for (UserAccount userAccount : userAccountList) {
-				retBuf.append("user name = ");
-				retBuf.append(userAccount.getName());
-				retBuf.append(", password = ");
-				retBuf.append(userAccount.getPassword());
-				retBuf.append(", email = ");
-				retBuf.append(userAccount.getEmail());
-				retBuf.append("\r\n");
-			}
-		}
-
-		if (retBuf.length() == 0) {
-			retBuf.append("No record find.");
-		} else {
-			retBuf.insert(0, "<pre>");
-			retBuf.append("</pre>");
-		}
-
-		return retBuf.toString();
 	}
 
 }

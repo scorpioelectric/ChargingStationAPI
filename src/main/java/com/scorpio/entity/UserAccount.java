@@ -16,7 +16,17 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @javax.persistence.Column(name = "name")
+    public UserAccount(int id, String name, String password, String email, Date createdAt, Date updatedAt) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.email = email;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+	@javax.persistence.Column(name = "name")
     private String name;
     @javax.persistence.Column(name = "password")
     private String password;
