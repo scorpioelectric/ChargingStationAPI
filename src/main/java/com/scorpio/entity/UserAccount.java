@@ -9,29 +9,45 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity(name = "users")
+@Entity(name = "EST_USERACC")
 public class UserAccount {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    public UserAccount(int id, String name, String password, String email, Date createdAt, Date updatedAt) {
+	public UserAccount() {}
+	
+    public UserAccount(long customerID, String userID, String gOOGLE_CLIENT_ID, String tWITTER_CLIENT_ID,
+			String fACEBOOK_CLIENT_ID, String password_SALT, String password_HASH, Date lastLogin, Date createdAt,
+			Date updatedAt) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.password = password;
-		this.email = email;
+		CustomerID = customerID;
+		UserID = userID;
+		GOOGLE_CLIENT_ID = gOOGLE_CLIENT_ID;
+		TWITTER_CLIENT_ID = tWITTER_CLIENT_ID;
+		FACEBOOK_CLIENT_ID = fACEBOOK_CLIENT_ID;
+		Password_SALT = password_SALT;
+		Password_HASH = password_HASH;
+		LastLogin = lastLogin;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
-
-	@javax.persistence.Column(name = "name")
-    private String name;
-    @javax.persistence.Column(name = "password")
-    private String password;
-    @javax.persistence.Column(name = "email")
-    private String email;
+    
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long CustomerID;
+	@javax.persistence.Column(name = "UserID")
+    private String UserID;
+    @javax.persistence.Column(name = "GOOGLE_CLIENT_ID")
+    private String GOOGLE_CLIENT_ID;
+    @javax.persistence.Column(name = "TWITTER_CLIENT_ID")
+    private String TWITTER_CLIENT_ID;
+    @javax.persistence.Column(name = "FACEBOOK_CLIENT_ID")
+    private String FACEBOOK_CLIENT_ID;
+    @javax.persistence.Column(name = "Password_SALT")
+    private String Password_SALT;
+    @javax.persistence.Column(name = "Password_HASH")
+    private String Password_HASH;
+    @javax.persistence.Column(name = "LastLogin")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date LastLogin;
     @javax.persistence.Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -39,53 +55,66 @@ public class UserAccount {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
     
-
-    public Date getUpdatedAt() {
-		return updatedAt;
+	public long getCustomerID() {
+		return CustomerID;
 	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
+	public void setCustomerID(long customerID) {
+		CustomerID = customerID;
 	}
-
+	public String getUserID() {
+		return UserID;
+	}
+	public void setUserID(String userID) {
+		UserID = userID;
+	}
+	public String getGOOGLE_CLIENT_ID() {
+		return GOOGLE_CLIENT_ID;
+	}
+	public void setGOOGLE_CLIENT_ID(String gOOGLE_CLIENT_ID) {
+		GOOGLE_CLIENT_ID = gOOGLE_CLIENT_ID;
+	}
+	public String getTWITTER_CLIENT_ID() {
+		return TWITTER_CLIENT_ID;
+	}
+	public void setTWITTER_CLIENT_ID(String tWITTER_CLIENT_ID) {
+		TWITTER_CLIENT_ID = tWITTER_CLIENT_ID;
+	}
+	public String getFACEBOOK_CLIENT_ID() {
+		return FACEBOOK_CLIENT_ID;
+	}
+	public void setFACEBOOK_CLIENT_ID(String fACEBOOK_CLIENT_ID) {
+		FACEBOOK_CLIENT_ID = fACEBOOK_CLIENT_ID;
+	}
+	public String getPassword_SALT() {
+		return Password_SALT;
+	}
+	public void setPassword_SALT(String password_SALT) {
+		Password_SALT = password_SALT;
+	}
+	public String getPassword_HASH() {
+		return Password_HASH;
+	}
+	public void setPassword_HASH(String password_HASH) {
+		Password_HASH = password_HASH;
+	}
+	public Date getLastLogin() {
+		return LastLogin;
+	}
+	public void setLastLogin(Date lastLogin) {
+		LastLogin = lastLogin;
+	}
 	public Date getCreatedAt() {
 		return createdAt;
 	}
-
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
-	public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+    
 
 }

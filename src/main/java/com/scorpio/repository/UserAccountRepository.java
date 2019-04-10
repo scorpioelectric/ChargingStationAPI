@@ -6,5 +6,5 @@ import com.scorpio.entity.UserAccount;
 
 public interface UserAccountRepository extends CrudRepository<UserAccount, Long> {
 
-
+	
 }

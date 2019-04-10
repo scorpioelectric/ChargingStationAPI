@@ -15,8 +15,6 @@ public class ChargingStation {
 
 	public ChargingStation(){}
 			
-
-
 	
 	  public ChargingStation(int i, String addressLine1, Date lastUpdateTime) {
 	  
