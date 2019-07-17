@@ -15,8 +15,6 @@ public class ChargingStation {
 
 	public ChargingStation(){}
 			
-
-
 	
 	  public ChargingStation(int i, String addressLine1, Date lastUpdateTime) {
 	  
@@ -40,7 +38,7 @@ public class ChargingStation {
 			)
 	  
 	  @Id 
-	  @GeneratedValue(strategy=GenerationType.TABLE, generator="AccountIdGenerator")
+	  @GeneratedValue(strategy=GenerationType.TABLE)
 	private Long ChargingStnID;
 	public ChargingStation(Long chargingStnID, int active, double port1_Current, double port2_Current,
 			double port1_Power, double port2_Power, double port1_Voltage, double port2_Voltage, double port1_Energy,

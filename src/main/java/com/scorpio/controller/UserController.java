@@ -31,7 +31,7 @@ public class UserController {
 	public ResponseEntity<Object> createStn(@RequestBody UserAccount userAcc) {
 		UserAccount savedAcc = userAccountRepository.save(userAcc);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("")
-			.buildAndExpand(savedAcc.getId()).toUri();
+			.buildAndExpand(savedAcc.getuserID()).toUri();
 			return ResponseEntity.created(location).build();
 	}
 	
